@@ -1,0 +1,28 @@
+.header_custom table thead tr  {
+background-color:
+
+#afa412
+;
+
+}
+
+.header_custom table thead tr th:nth-child(odd){
+width:250pxl;
+color:
+#0000ff;
+text-align: center;
+}
+.header_custom table thead tr th:nth-child(even){
+width:250pxl;
+color:
+#008f22;
+text-align: center;
+}
+
+
+
+
+
+
+
+

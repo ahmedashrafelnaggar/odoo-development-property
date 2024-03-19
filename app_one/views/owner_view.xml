@@ -1,0 +1,91 @@
+<odoo>
+    <record model="ir.ui.view"  id="owner_view_tree">
+
+
+
+        <field name="name">owner_tree</field>
+        <field name="model">owner</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view co/ntent: <form>, <tree>, <graph>, ... -->
+            <tree multi_edit="1" create="1" edit="1" delete="1">
+
+                <field name="name"/>
+                <field name="phone"/>
+                <field name="address"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view"  id="owner_view_form">
+        <field name="name">owner form </field>
+        <field name="model">owner</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+                     <div class="oe_title">
+
+                        <label for="name" class="form-label">name:</label>
+                         <h1>
+                             <field name="name"/>
+
+                         </h1>
+                     </div>
+                     <separator string="General" colspan="2" />
+
+                    <group>
+
+                        <group string="General info">
+
+                            <field name="name"/>
+
+
+                        </group>
+
+                        <group string="Additional info">
+
+                            <field name="phone"/>
+                            <field name="address"/>
+                        </group>
+
+                        <group>
+                            <field name="property_ids" widget="many2many_tags"/>
+<!--                            very important attribute-->
+                        </group>
+
+                        <group>
+                             <field name="description" placeholder="Idea description..."  required="1"/>
+
+                        </group>
+
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record
+            model="ir.actions.act_window"
+            id="owner_action">
+
+            <field name="name">owner</field>
+            <field name="res_model">owner</field>
+<!--        <field name="">tree,form</field>-->
+
+    </record>
+
+    <menuitem
+
+            id="owner_menu_item"
+            name="owner"
+            parent="configration_menu"
+            action="owner_action"
+    />
+
+
+</odoo>

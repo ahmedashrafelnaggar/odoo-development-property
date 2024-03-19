@@ -1,0 +1,77 @@
+<odoo>
+
+     <record model="ir.ui.view"  id="tag_view_tree">
+
+
+
+        <field name="name">tag_tree</field>
+        <field name="model">tag</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <tree multi_edit="1" create="1" edit="1" delete="1">
+
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+
+
+     <record model="ir.ui.view"  id="tag_view_form">
+        <field name="name">tag form </field>
+        <field name="model">tag</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+                     <div class="oe_title">
+
+                        <label for="name" class="form-label">name:</label>
+                         <h1>
+                             <field name="name"/>
+
+                         </h1>
+                     </div>
+                     <separator string="General" colspan="2"/>
+
+                    <group>
+
+                        <group string="General info">
+
+                            <field name="name"/>
+                        </group>
+
+                        <group string="Additional info">
+
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+
+    <record
+            model="ir.actions.act_window"
+            id="tag_action">
+
+            <field name="name">tag</field>
+            <field name="res_model">tag</field>
+<!--        <field name="">tree,form</field>-->
+
+    </record>
+
+    <menuitem
+
+            id="tag_menu_item"
+            name="tags"
+            parent="configration_menu"
+            action="tag_action"
+    />
+
+</odoo>

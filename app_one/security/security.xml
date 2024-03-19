@@ -1,0 +1,48 @@
+<odoo>
+
+<!--    this is category-->
+    <record id="property_category" model="ir.module.category">
+        <field name="name"> Real Estate </field>
+    </record>
+
+<!--    this is group 1  for manager with connect category-->
+    <record id="property_manager_group" model="res.groups">
+        <field name="name"> Property Manager</field>
+        <field name="category_id" ref="app_one.property_category"/>
+    </record>
+
+<!--    this is group2 for users-->
+    <record id="property_user_group" model="res.groups">
+        <field name="name"> Property User</field>
+        <field name="category_id" ref="app_one.property_category"/>
+    </record>
+
+<!--    this record rule-->
+    <record id="property_record_rule_by_user" model="ir.rule">
+        <field name="name">Property_Record_Rule_by_User</field>
+        <field name="model_id" ref="app_one.model_property"/>
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+<!--        '|', ('company_id', '=', False),-->
+<!--             ('company_id', 'in', company_ids)]-->
+<!--        </field>-->
+
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>
+
+
+
+
+
+<!--    <field name="name">A description of the rule's role</field>-->
+<!--    <field name="model_id" ref="model_to_manage"/>-->
+<!--    <field name="perm_read" eval="False"/>-->
+<!--    <field name="groups" eval="[Command.link(ref('base.group_user'))]"/>-->
+<!--    <field name="domain_force">[-->
+<!--        '|', ('user_id', '=', user.id),-->
+<!--             ('user_id', '=', False)-->
+<!--    ]</field>-->
+<!--</record>-->

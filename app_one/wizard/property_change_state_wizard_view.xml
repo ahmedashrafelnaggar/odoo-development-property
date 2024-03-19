@@ -1,0 +1,62 @@
+<odoo>
+<!--    <record model="ir.ui.view"  id="property_change_state_wizard_view_tree">-->
+
+
+
+<!--        <field name="name">property_change_state_wizard_tree</field>-->
+<!--        <field name="model">change.state</field>-->
+<!--        <field name="priority" eval="16"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            &lt;!&ndash; view co/ntent: <form>, <tree>, <graph>, ... &ndash;&gt;-->
+<!--            <tree multi_edit="1" create="1" edit="1" delete="1">-->
+
+<!--                <field name="name"/>-->
+<!--                <field name="phone"/>-->
+<!--                <field name="address"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <record model="ir.ui.view"  id="property_change_state_wizard_form">
+        <field name="name">property_change_state_wizard form </field>
+        <field name="model">change.state</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <group string="General info">
+                    <field name="property_id" invisible="1"/>
+                    <field name="state" required="1"/>
+                    <field name="reason" required="1"/>
+                </group>
+                <footer>
+                    <button string="Confirm" type="object" name="action_confirm" class="btn btn-primary"/>
+                    <button string="Cancel" special="cancel"  class="btn btn-secondary"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+        <!--    fields actions for property_change _state_wizard it,s important -->
+    <record
+            model="ir.actions.act_window"
+            id="property_change_state_wizard_action">
+
+            <field name="name">Change State</field>
+            <field name="res_model">change.state</field>
+            <field name="target">new</field>
+            <field name="view_mode">form</field>
+<!--        <field name="">tree,form</field>-->
+    </record>
+
+    <menuitem
+
+            id="property_change_state_wizard_menu_item"
+            name="Change State"
+            parent="configration_menu"
+            action="property_change_state_wizard_action"
+    />
+</odoo>

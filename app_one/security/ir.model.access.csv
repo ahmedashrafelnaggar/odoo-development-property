@@ -1,0 +1,15 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+acceess_property,acceess_property,model_property,,1,1,1,1
+acceess_owner,acceess_owner,model_owner,,1,1,1,1
+acceess_tag,acceess_tag,model_tag,,1,1,1,1
+acceess_property_line,acceess_property_line,model_property_line,,1,1,1,1
+acceess_building,acceess_building,model_building,,1,1,1,1
+acceess_property_history,acceess_property_history,model_property_history,,1,1,1,1
+acceess_change_state,acceess_change_state,model_change_state,,1,1,1,1
+acceess_property_history_line,acceess_property_history_line,model_property_history_line,,1,1,1,1
+
+
+
+
+
+

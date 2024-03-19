@@ -1,0 +1,111 @@
+<odoo>
+    <record id="todo_task_report" model="ir.actions.report">
+
+        <field name="name">TodoTask Report</field>
+        <field name="model">todo.task</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">todo_app.todo_task_report_template</field>
+        <field name="binding_model_id" ref="model_todo_task"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <template id="todo_task_report_template">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="rec">
+                <t t-call= "web.external_layout">
+                    <div class="page">
+                        <h1 style="color: black;">  TodoTask  Report </h1>
+                        <style>
+                            table {
+                            border-collapse: collapse;
+                            width: 100%;
+                            border: 1px solid #b3adad;
+                            padding:5px;
+                            }
+
+
+                            table th {
+                            text-align:center;
+                            border: 1px solid #b3adad;
+                            padding:5px;
+                            background:#f0f0f0;
+                            color:#313030;
+
+                            }
+                            table td{
+                            border: 1px solid #b3adad;
+                            text-align:center;
+                            padding:5px;
+                            background:#ffffff;
+                            color:#313030;
+                            }
+                        </style>
+
+                         <table>
+                             <thead>
+                                 <th colspan="4">General Info</th>
+
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>Name</td>
+                                     <td>Due_Date</td>
+
+                                 </tr>
+                                 <tr>
+                                     <td>  <t t-esc="rec.name"/></td>
+                                     <td><t t-esc="rec.due_date"/>  </td>
+                                 </tr>
+                             </tbody>
+
+                              <thead>
+                                 <th colspan="4">Additional Info</th>
+
+                             </thead>
+                             <tbody>
+                                 <tr>
+                                     <td>assign_to_id</td>
+                                     <td>state</td>
+                                 </tr>
+                                 <tr>
+                                     <td><t t-esc="rec.assign_to_id.name"/></td>
+                                     <td><t t-esc="rec.state"/></td>
+                                 </tr>
+                             </tbody>
+                         </table>
+
+                        <br/>
+
+                        <table>
+                            <thead>
+                                <th>Description </th>
+                                <th> Date </th>
+                                <th> Time </th>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="rec.line_ids" t-as="line">
+                                    <tr>
+                                        <td>
+                                            <t t-esc="line.description"/>
+<!--                                            <span t-field="line.description"/>-->
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.Date"/>
+<!--                                            <span t-field="line.Date"/>-->
+                                        </td>
+                                        <td>
+                                            <t t-esc="line.Time"/>
+<!--                                            <span t-field="line.Time"/>-->
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

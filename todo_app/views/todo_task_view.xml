@@ -1,0 +1,182 @@
+<odoo>
+    <record
+            model="ir.ui.view"
+            id="todo_task_view_tree">
+
+        <field name="name">todo_task tree</field>
+        <field name="model">todo.task</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <tree multi_edit="1" decoration-primary="state=='new'" decoration-info="state=='in_progress'" decoration-success="state=='completed'" create="1" edit="1" delete="1">
+
+                <field name="name"/>
+                <field name="due_date"/>
+                <field name="assign_to_id"/>
+                <field name="state"
+                       decoration-primary="state=='new'"
+                       decoration-info="state=='in_progress'"
+                       decoration-success="state=='completed'"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view"  id="todo_task_view_form">
+        <field name="name">todo_task form </field>
+        <field name="model">todo.task</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form  create="1" edit="1" delete="1">
+                <sheet>
+
+                    <header>
+                        <button string="Set To New" type="object" name="action_new" class="btn btn-outline-primary p-1 m-1 btn-lg"  invisible="state == 'new'"/>
+                        <button string="In_Progress" type="object" name="action_in_progress" class="btn btn-outline-info p-1 m-1 btn-lg" invisible="state != 'new'"/>
+                        <button string="completed" type="object" name="action_completed" class="btn btn-outline-success p-1 m-1 btn-lg"  invisible="state != 'in_progress'"/>
+                        <field name="state" widget="statusbar" options="{'clickable':1}"/>
+                    </header>
+
+                     <div class="oe_title">
+
+                         <h1>
+                             <label for="name" class="form-label">name:</label>
+                             <field name="name"/>
+
+                         </h1>
+                     </div>
+                     <separator string="General" colspan="2" />
+
+                    <group>
+
+                        <group string="General info">
+
+                            <field name="name"/>
+                            <field name="due_date"/>
+                            <field name="active" invisible="1"/>
+
+
+                        </group>
+
+                        <group string="Additional info">
+                            <field name="state"/>
+                            <field name="assign_to_id"/>
+
+                        </group>
+
+                        <group>
+                             <field name="description" placeholder="Idea description..."/>
+
+                        </group>
+                    </group>
+                     <notebook>
+                        <page string="Tasks">
+
+                            <field name="line_ids">
+
+                                <tree editable ="bottom">
+                                    <field name="description"/>
+                                    <field name="Date"/>
+                                    <field name="Time" widget="float_time"/>
+
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+     <record model="ir.ui.view"  id="todo_task_view_search">
+
+
+
+        <field name="name">todo_task_search</field>
+        <field name="model">todo.task</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <search>
+                <field name="name"/>
+                <field name="assign_to_id"/>
+
+
+                <filter name="is_state_new" string="With State_New"
+                        domain="[('state', '=', 'new')]"/>
+
+                <filter name="is_state_in_progress" string="With  State_In_Progress"
+                        domain="[('state', '=', 'in_progress')]"/>
+
+                <filter name="is_state_completed" string="With State_Completed"
+                        domain="[('state', '=', 'completed')]"/>
+
+
+
+                <filter name="is_name" string="With NAME"
+                        domain="[('name', '=', True)]"/>
+
+                 <filter name="is_not_name" string="Without NAME"
+                        domain="[('name', '!=', True)]"/>
+
+                <filter name="is_due_date" string="With Due_date"
+                        domain="[('due_date', '=', True)]"/>
+
+                <group string="Group By">
+                    <filter name="group_by_state" string="State"
+                            context="{'group_by': 'state'}"/>
+                </group>
+
+                <group string="Group By">
+
+                    <filter name="group_by_date" string="Date"
+                            context="{'group_by': 'due_date'}"/>
+                </group>
+
+                 <group string="Group By">
+
+                    <filter name="group_by_assign" string="Assign"
+                            context="{'group_by': 'assign_to_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record
+            model="ir.actions.act_window"
+            id="todo_task_action">
+
+            <field name="name">To Do</field>
+            <field name="res_model">todo.task</field>
+<!--            <field name="">tree,form</field>-->
+    </record>
+
+     <record
+            id="todo_task_closed_server_actions"
+            model="ir.actions.server">
+
+         <field name="name">Closed</field>
+         <field name="model_id" ref="model_todo_task"/>
+         <field name="binding_model_id" ref="model_todo_task"/>
+         <field name="state">code</field>
+         <field name="code">
+            action = records.action_closed()
+         </field>
+    </record>
+
+
+    <menuitem
+
+            id="todo_task_menu_item"
+            name="All Tasks"
+            parent="todo_task_menu"
+            action="todo_task_action"
+    />
+
+</odoo>

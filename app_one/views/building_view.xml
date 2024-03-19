@@ -1,0 +1,151 @@
+<odoo>
+
+    <record model="ir.ui.view"  id="building_view_tree">
+
+
+
+        <field name="name">building tree</field>
+        <field name="model">building</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view co/ntent: <form>, <tree>, <graph>, ... -->
+            <tree class="header_custom"  decoration-primary="state=='draft'" decoration-info="state=='pending'" decoration-success="state=='sold'" create="1" edit="1" delete="1">
+
+                <field name="name"/>
+                <field name="number"/>
+                <field name="code"/>
+                <field name="active"/>
+                <field name="state"
+                       decoration-primary="state=='draft'"
+                       decoration-info="state=='pending'"
+                       decoration-success="state=='sold'"
+                />
+                <field name="description"/>
+            </tree>
+        </field>
+
+
+    </record>
+
+    <record model="ir.ui.view"  id="building_view_form">
+        <field name="name">building form </field>
+        <field name="model">building</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+
+                    <header>
+                        <button string="Set To Draft" type="object" name="action_draft" class="btn btn-outline-primary p-1 m-1 btn-lg"  invisible="state == 'draft'"/>
+                        <button string="Pending" type="object" name="action_pending" class="btn btn-outline-info p-1 m-1 btn-lg" invisible="state != 'draft'"/>
+                        <button string="Sold" type="object" name="action_sold" class="btn btn-outline-success p-1 m-1 btn-lg"  invisible="state != 'pending'"/>
+                        <field name="state" widget="statusbar" options="{'clickable':1}"/>
+                    </header>
+
+                     <div class="oe_title">
+
+                         <h1>
+                             <label for="name" class="form-label">name:</label>
+                             <field name="name"/>
+
+                         </h1>
+                     </div>
+                     <separator string="info" colspan="2" />
+
+                    <group>
+
+                        <group string="General info">
+                            <field name="name"/>
+                            <field name="number" required="1"/>
+
+                        </group>
+
+                        <group string="Additional info">
+
+                            <field name="code"/>
+                            <field name="description"/>
+                            <field name="state"/>
+                            <field name="active" invisible="1"/>
+
+                        </group>
+
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="">-->
+<!--                            <field name="">-->
+<!--                                <tree editable="">-->
+<!--                                    <field name=""/>-->
+<!--                                    <field name=""/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+     <record model="ir.ui.view"  id="building_view_search">
+
+
+
+        <field name="name">building search</field>
+        <field name="model">building</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <search>
+                <field name="name"/>
+                <field name="number"/>
+                <field name="code"/>
+
+                <filter name="is_number" string="With Number"
+                        domain="[('number', '=', True)]"/>
+
+                 <filter name="is_not_number" string="Without Number"
+                        domain="[('number', '!=', True)]"/>
+
+                <filter name="is_code" string="With Code"
+                        domain="[('code', '=', True)]"/>
+
+                <group string="Group By">
+                    <filter name="group_by_code" string="Code"
+                            context="{'group_by': 'code'}"/>
+                </group>
+
+            </search>
+        </field>
+    </record>
+
+
+
+    <record
+            model="ir.actions.act_window"
+            id="building_action">
+
+            <field name="name">Building</field>
+            <field name="res_model">building</field>
+<!--            <field name="">tree,form,calendar</field>-->
+    </record>
+
+
+
+
+    <menuitem
+
+            id="building_menu_item"
+            name="Buildings"
+            parent="properties_menu"
+            action="building_action"
+    />
+
+
+</odoo>

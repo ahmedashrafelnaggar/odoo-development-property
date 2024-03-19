@@ -1,0 +1,173 @@
+<odoo>
+
+    <record model="ir.ui.view"  id="property_history_view_tree">
+        <field name="name">property_history_tree</field>
+        <field name="model">property.history</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view co/ntent: <form>, <tree>, <graph>, ... -->
+            <tree create="0" edit="0" delete="0">
+                <field name="user_id"/>
+                <field name="property_id"/>
+                <field name="old_state"/>
+                <field name="new_state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view"  id="property_history_view_form">
+        <field name="name">property_history form </field>
+        <field name="model">property.history</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="0" edit="0" delete="0">
+                <sheet>
+                     <separator string="General" colspan="2" />
+
+                    <group>
+
+                        <group string="General info">
+
+                            <field name="user_id" />
+                            <field name="property_id" />
+
+                        </group>
+
+                        <group string="Additional info">
+
+                            <field name="old_state"/>
+                            <field name="new_state"/>
+                            <field name="reason"/>
+                        </group>
+                    </group>
+                     <notebook>
+                        <page string="Bedrooms">
+
+                            <field name="line_ids" readonly="1">
+                                <tree>
+                                    <field name="description"/>
+                                    <field name="area"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+<!--     <record model="ir.ui.view"  id="property_view_search">-->
+
+
+
+<!--        <field name="name">property search</field>-->
+<!--        <field name="model">property</field>-->
+<!--        <field name="priority" eval="16"/>-->
+<!--        <field name="arch" type="xml">-->
+
+<!--            &lt;!&ndash; view content: <form>, <tree>, <graph>, ... &ndash;&gt;-->
+<!--            <search>-->
+<!--                <field name="name"/>-->
+<!--                <field name="post_code"/>-->
+
+<!--                <filter name="is_garden" string="With Garden"-->
+<!--                        domain="[('garden', '=', True)]"/>-->
+
+<!--                 <filter name="is_not_garden" string="Without Garden"-->
+<!--                        domain="[('garden', '!=', True)]"/>-->
+
+<!--                <filter name="is_garage" string="With Garage"-->
+<!--                        domain="[('garage', '=', True)]"/>-->
+
+<!--                <group string="Group By">-->
+<!--                    <filter name="group_by_garden" string="Garden"-->
+<!--                            context="{'group_by': 'garden'}"/>-->
+<!--                </group>-->
+
+<!--            </search>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    <record model="ir.ui.view" id="property_calendar_view">-->
+<!--            <field name="name">property calendar</field>-->
+<!--            <field name="model">property</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <calendar string="property Calendar" date_start="date_availability"  scales="day,week,month" mode="month">-->
+<!--                    <field name="name"/>-->
+<!--                </calendar>-->
+<!--            </field>-->
+<!--    </record>-->
+
+
+
+    <record
+            model="ir.actions.act_window"
+            id="property_history_action">
+
+            <field name="name">Property History</field>
+            <field name="res_model">property.history</field>
+<!--            <field name="">tree,form,calendar</field>-->
+    </record>
+
+<!--    server actions-->
+<!--    <record-->
+<!--            id="property_closed_server_actions"-->
+<!--            model="ir.actions.server">-->
+
+<!--         <field name="name">Closed</field>-->
+<!--         <field name="model_id" ref="model_property"/>-->
+<!--         <field name="binding_model_id" ref="model_property"/>-->
+<!--         <field name="state">code</field>-->
+<!--         <field name="code">-->
+<!--            action = records.action_closed()-->
+<!--         </field>-->
+<!--    </record>-->
+
+<!--&lt;!&ndash;    automated action &ndash;&gt;-->
+<!--    <record-->
+<!--            id="check_selling_date_cron"-->
+<!--            model="ir.cron">-->
+
+<!--         <field name="name">Property : check_selling_date</field>-->
+<!--         <field name="model_id" ref="model_property"/>-->
+<!--         <field name="state">code</field>-->
+<!--         <field name="code">model.check_expected_selling_price_date()</field>-->
+<!--         <field name="interval_number">1</field>-->
+<!--         <field name="interval_type">days</field>-->
+<!--         <field name="numbercall">-1</field>-->
+<!--         <field name="active">True</field>-->
+
+<!--    </record>-->
+
+
+    <menuitem
+
+            id="property_history_menu_item"
+            name="Property History"
+            parent="properties_menu"
+            action="property_history_action"
+    />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</odoo>
