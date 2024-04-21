@@ -6,6 +6,7 @@ from . import client
 from . import res_partner
 from . import building
 from . import property_history
+from . import account_move
 
 
 

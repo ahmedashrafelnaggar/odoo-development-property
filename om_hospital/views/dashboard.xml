@@ -1,0 +1,80 @@
+<odoo>
+<!--    graph in dashboard-->
+    <record id="act_patient_appointments" model="ir.actions.act_window">
+        <field name="name">Patient  Appointment</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">graph</field>
+<!--        <field name="view_id" ref="name of your app.id betaa3 el graph in file appointment_view.xml"/>-->
+        <field name="view_id" ref="om_hospital.hospital_appointment_graph"/>
+    </record>
+
+<!--       calendar in dashboard-->
+
+    <record id="act_book_appointment" model="ir.actions.act_window">
+        <field name="name">Book Appointment</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">calendar</field>
+        <!--        <field name="view_id" ref="name of your app.id betaa3 el calendar in file appointment_view.xml"/>-->
+        <field name="view_id" ref="om_hospital.hospital_appointment_calendar"/>
+    </record>
+
+<!--    tree and form in dashboard-->
+    <record id="act_patient_list" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hospital.appointment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+<!--this is  form dashboard-->
+    <!-- <board style="1-2"> this mean 1-2 , 1 this one couloumn , 2 this mean two couloumns-->
+    <!--name="%(name of your app.id betaa3 el graph but in file dashboard.xml)d" />-->
+      <!-- name="%(name of your app.id betaa3 el tree ,form  but in file dashboard.xml)d" />-->
+    <!-- name="%(name of your app.id betaa3 el calendar but in file dashboard.xml)d" />-->
+    <record model="ir.ui.view" id="dashboard_form_view">
+        <field name="name">Dashboard  Form</field>
+        <field name="model">board.board</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="My Dashboard">
+                <board style="1-2">
+                    <column>
+
+                        <action string="Patient  Appointment"
+                                name="%(om_hospital.act_patient_appointments)d" />
+                    </column>
+                    <column>
+                        <action string="Patient List"
+                                name="%(om_hospital.act_patient_list)d" />
+
+
+
+                        <action string="Book Appointment"
+                                name="%(om_hospital.act_book_appointment)d" />
+                    </column>
+                </board>
+            </form>
+        </field>
+    </record>
+
+<!--    this is  dashboard action -->
+    <!--  ref = id betaa3 form dashboard view in file dashboard.xml-->
+       <record model="ir.actions.act_window" id="hospital_dashboard_action">
+            <field name="name">Dashboard</field>
+            <field name="res_model">board.board</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="dashboard_form_view"/>
+       </record>
+
+   <menuitem
+            id="Dashboard_menu"
+            name="Dashboard"
+            parent="hospital_root_menu"
+            sequence="1"
+            action="hospital_dashboard_action"
+   />
+
+</odoo>

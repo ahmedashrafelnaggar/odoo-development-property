@@ -1,0 +1,42 @@
+<odoo>
+    <menuitem
+            id="hospital_root_menu"
+            name="Hospital"
+            web_icon="om_hospital,static/description/icon.png"
+    />
+
+    <menuitem
+            id="patient_master_menu"
+            name="Patient Details"
+            parent="hospital_root_menu"
+    />
+
+    <menuitem
+            id="appointment_master_menu"
+            name="Appointment"
+            parent="hospital_root_menu"
+    />
+
+    <menuitem
+            id="doctor_master_menu"
+            name="Doctors"
+            parent="hospital_root_menu"
+    />
+    <menuitem
+            id="configuration_menu"
+            name="Configuration"
+            parent="hospital_root_menu"
+    />
+
+
+
+
+
+    <menuitem
+            id="technical_menu"
+            name="Technical"
+            parent="hospital_root_menu"
+    />
+
+
+</odoo>

@@ -1,0 +1,372 @@
+<odoo>
+<!-- create activity-->
+     <record model="ir.ui.view"  id="hospital_appointment_view_activity">
+        <field name="name">hospital_appointment activity</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <activity string="Appointments">
+                <field name="patient_id"/>
+                <field name="patient_phone"/>
+                <field name="ref"/>
+                <templates>
+                    <div t-name="activity-box">
+<!--                        this model which i did relation with it then name field beta3 relation many2one patient_id-->
+<!--                        this is model beta3 patient hospital.patient-->
+                        <img t-att-src="activity_image('hospital.patient','image', record.patient_id.raw_value)" t-att-title="record.patient_id.raw_value" t-att-alt="record.patient_id.raw_value"/>
+                        <div>
+                            <field name="ref" display="full"/>
+                        </div>
+                    </div>
+                </templates>
+            </activity>
+        </field>
+    </record>
+
+
+<!--THIS IS TREE-->
+    <record model="ir.ui.view"  id="hospital_appointment_view_tree">
+        <field name="name">hospital_appointment_tree</field>
+        <field name="model">hospital.appointment</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <tree  sample="1" create="1" edit="1" delete="1"  multi_edit="1"  decoration-primary="state=='draft'" decoration-warning="state=='in_consultation'" decoration-success="state=='done'" decoration-danger="state=='cancel'">
+<!--                you put header here if you want to put button in treeview to execute any thing when i press on any namouzag elly sagallto-->
+                <header>
+                    <button string="Done" type="object" name="action_done" class="oe_highlight" />
+                </header>
+
+                <field name="patient_id" />
+                <field name="ref" optional="show"/>
+                <field name="gender" optional="hide"/>
+                <field name="doctor_id" widget="many2one_avatar_user" />
+                <field name="appointment_time" optional="show" />
+                <field name="booking_date" optional="show"/>
+                <field name="activity_ids" widget="list_activity"/>
+                <field name="state" widget="badge"
+                       decoration-primary="state=='draft'"
+                       decoration-warning="state=='in_consultation'"
+                       decoration-success="state=='done'"
+                       decoration-danger="state=='cancel'"
+                />
+<!--                this is button when you press on it make state = done look at it in tree view , this class checkbox next to this is button -->
+<!--                to get this checbox  write it in class i get from it from this link from https://fontawesome.com/v4/icons/-->
+                <button  type="object" name="action_done"  invisible="state != 'in_consultation'" class="fa fa-check btn-success"/>
+                <!--                this is button when you press on it make state =  look at it in tree view , this class called time or close next to this is button -->
+<!--                to get this close   write it in class i get from it from this link from https://fontawesome.com/v4/icons/-->
+                <button  type="action" name="om_hospital.cancel_appointment_action" context="{'default_appointment_id': active_id}" class="fa fa-times btn-danger" invisible="state not in ('draft', 'in_consultation')"/>
+<!--                this widget progressbar is very important-->
+                <field name="progress" widget = 'progressbar'/>
+            </tree>
+        </field>
+    </record>
+<!--     appointment timeline-->
+
+<!--    <record id="appointment_timeline" model="ir.ui.view">-->
+<!--        <field name="model">hospital.appointment</field>-->
+<!--        <field name="type">timeline</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <timeline date_start="booking_date"-->
+<!--                      date_stop="end_date"-->
+<!--                      string="Tasks"-->
+<!--                      default_group_by="doctor_id"-->
+<!--                      event_open_popup="true"-->
+<!--                      colors="#ec7063:state == 'draft';#2ecb71: state=='done';">-->
+<!--                <field name="patient_id"/>-->
+<!--                <field name="name"/>-->
+<!--                <templates>-->
+<!--                    <t t-name="timeline_item">-->
+<!--                        <div class="o_project_timeline_item">-->
+<!--                            <span name="display_name">-->
+<!--                                <t t-esc="record.display_name "/>-->
+<!--                            </span>-->
+<!--                            <small name="planned_hours" class="text-muted ml4">-->
+<!--                                <t t-esc="record.notes"/>-->
+<!--                            </small>-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </templates>-->
+<!--            </timeline>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    this is pivot view-->
+<!--    you choice fields doctor and his appointment and for any patient his special doctor-->
+    <record id="hospital_appointment_pivot" model="ir.ui.view">
+        <field name="name"> hospital_appointment pivot</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <pivot string="Pivot Appointment" >
+                <field name="patient_id" type="row"/>
+                <field name="doctor_id" type="row"/>
+                <field name="appointment_time" type="col" interval="day"/>
+            </pivot>
+        </field>
+    </record>
+
+
+    <!--    this is calendar-->
+<!--      can you use color="patient_id" or color="state"  as you like-->
+<!--                  form_view_id="%(name your app.id betaa3 form view)d"-->
+<!--                 avatar_field="image" to make picture of patient behind his name-->
+     <record model="ir.ui.view"  id="hospital_appointment_calendar">
+         <field name="name">hospital_appointment_calendar</field>
+         <field name="model">hospital.appointment</field>
+         <field name="arch" type="xml">
+<!--             you should create fielt about date and put it in date_start like this date_start="booking_date" , -->
+<!--             and create field duration about el modda el zamanya and put it in date_dalay like this date_dalay="duration"-->
+             <calendar string=" Appointments" date_start="booking_date" mode="month" color="patient_id" date_delay="duration"
+                       hide_time="1" form_view_id="%(om_hospital.hospital_appointment_view_form)d" event_open_popup="1" event_limit="5">
+                 <field name="patient_id" filters="1" avatar_field="image"/>
+                 <field name="state" filters="1" />
+             </calendar>
+         </field>
+     </record>
+
+    <!--    this is graph view-->
+    <record id="hospital_appointment_graph" model="ir.ui.view">
+        <field name="name"> hospital_appointment graph</field>
+        <field name="model">hospital.appointment</field>
+        <field name="arch" type="xml">
+            <graph string="graph Appointment" type="pie">
+                <field name="patient_id" />
+                <field name="total_amount" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+<!--    this form view-->
+    <record model="ir.ui.view"  id="hospital_appointment_view_form">
+        <field name="name">hospital_appointment form </field>
+        <field name="model">hospital.appointment</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+<!--                    this is smart button and the method betaa3 smart button in model appointment and invisible="not patient_id this is patient _id this name of relation field-->
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_open_related_patient" string="Patients"  icon="fa-user" type="object" invisible="not patient_id">
+                        </button>
+                    </div>
+<!--                    web ribbon  this is without method you create field archive and state done only-->
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <widget name="web_ribbon" title="Done" bg_color="text-bg-success" invisible="state != 'done' "/>
+
+
+                    <header>
+                        <button string="Set To Draft" type="object" name="action_draft" class="oe_highlight" invisible="state in ('draft','cancel')"/>
+                        <button string="Action" type="object" name="action" class="oe_highlight"/>
+
+<!--                        this button for method integration with whatsapp-->
+                        <button string="Share In WhatsApp" type="object" name="action_share_whatsapp" style="border-radius: 50px 20px;"   class="oe_stat_button btn-success " icon="fa-whatsapp" data-key="w"/>
+<!--                        this button for method send mail elly howwa in folder data is called appointment_email_template-->
+                        <button string="Send Mail" type="object" name="action_send_mail" class="oe_stat_button"  data-key="m"/>
+
+                        <button string="In Consultation" type="object" name="action_in_consultation" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button string="Done" type="object" name="action_done" class="oe_highlight" invisible="state != 'in_consultation'"/>
+<!--                        this is another way to make active id or test appear automatic when i open wizard and this button to make open wizard when you press on it -->
+<!--                        you make type= action ,and name = name your app . id beta3 action for wizard-->
+                        <button string="Cancel" type="action" name="om_hospital.cancel_appointment_action" context="{'default_appointment_id': active_id}" class="oe_highlight" />
+<!--                        deference between active_id and test , active_id its number so i dont need put single or double caught ,but test i put on it single or double caught because will be appear here string -->
+<!--                        <button string="Cancel" type="action" name="om_hospital.cancel_appointment_action" context="{'default_reason': 'test'}" class="oe_highlight" />-->
+<!--                        <button string="Cancel" type="object" name="action_cancel" class="oe_highlight"/>-->
+                        <field name="state" widget="statusbar" options="{'clickable':1}" nolabel="1"/>
+                    </header>
+
+                     <div class="oe_title">
+                         <h1>
+                             <label for="ref" class="form-label">ref:</label>
+                             <field name="ref" readonly="state !='draft'" />
+                         </h1>
+
+                         <h2>
+<!--                             <label for="name" class="form-label">name:</label>-->
+<!--                             <field name="name"/>-->
+<!--                             <label for="priority" class="form-label">priority:</label>-->
+                             <field name="priority" widget="priority"/>
+                         </h2>
+                     </div>
+<!--                     <separator string="General" colspan="2" />-->
+
+                    <group>
+
+                        <group string="General info">
+                            <field name="patient_id" default_focus="1"/>
+                            <field name="patient_phone"/>
+                            <field name="patient_email"/>
+                            <field name="ref"/>
+                            <field name="doctor_id" />
+                            <field name="gender"/>
+                            <field name="age"/>
+                            <field name="booking_date" help="this is booking date" default_focus="1"/>
+                            <field name="appointment_start_date" />
+                            <field name="end_date" help="this is end date" default_focus="1"/>
+                            <field name="duration" />
+                            <field name="state"/>
+
+                        </group>
+
+                        <group string="Additional info">
+
+                            <field name="hide_sale_price" />
+                            <field name="amount" />
+                            <field name="total_amount" />
+                            <field name="active" invisable="1"/>
+<!--                            this fields company_id,currency_id you add it in hospital.appointment for do monetary field -->
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="currency_id" groups="base.group_multi_currency"/>
+
+                            <field name="appointment_time" />
+                            <button name="action_test"  string="Object Button"  type="object" class="oe_highlight" help="A message will be printed in the log" confirm="Are you sure to execute python code?"/>
+
+
+
+                        </group>
+
+                    </group>
+                    <notebook>
+<!--                        this shape progress in notebook you can use <field name="progress" widget = 'percentpie' also instead of gauge but gauge is better from percentpie but when i put gauge appear moskela
+ so that i put widget = 'percentpie' instead of widget = 'gauge'-->
+                        <page string="Progress" name="progress">
+                            <field name="progress" widget = 'percentpie'
+                                   options="{'style':'width:100px; height:100px;'}"/>
+                        </page>
+
+                        <page string="Prescription">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+                                    <field name="prescription" placeholder="Enter Your Prescription" options="{'collaborative':true , 'resizable':true, 'codeview':true}"/>
+                                    <field name="description"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Clinics">
+                            <field name="line_ids">
+                                <tree editable="bottom">
+<!--                                    this 2 fields price_unit,quantity to do compute monetary field elly howa price_subtotal-->
+<!--                                    this widget is important to make price unit beganibha $ -->
+                                    <field name="price_unit" widget="monetary" options="{'currency_field':'currency_id'}"/>
+                                    <field name="quantity"/>
+<!--                                    this fields price_subtotal,currency_id you add it in hospital.appointment for do monetary field -->
+                                    <field name="currency_id" invisable="1"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+<!--    this is search view-->
+     <record model="ir.ui.view"  id="hospital_appointment_view_search">
+        <field name="name">hospital_appointment search</field>
+        <field name="model">hospital.appointment</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <search>
+                <field name="patient_id" string="Patient Id" />
+<!--                <field name="ref"/>-->
+<!--                <field name="age"/>-->
+<!--                <field name="gender"/>-->
+
+<!--                <filter name="patient_id" string="Patient"-->
+<!--                        domain="[('patient_id', '=', 'ahmed')]"/>-->
+<!--                <filter name="gender_female" string="Female"-->
+<!--                        domain="[('gender', '=', 'female')]"/>-->
+<!--                <filter name="filter_kids" string="Kids"-->
+<!--                        domain="[('age', '&lt;=', 5)]"/>-->
+<!--                you should do this filter when you creat web ribbon and create field active this ka3eda filter active is false alawys-->
+                <filter name="filter_Archived" string="Archived"
+                        domain="[('active', '=', False)]"/>
+
+                <group string="Group By">
+                    <filter name="group_by_patient_id" string="Patient Id"
+                            context="{'group_by': 'patient_id'}"/>
+                </group>
+                <searchpanel>
+                    <field name="priority" enable_counters="1" icon="fa-users" select="multi"/>
+                </searchpanel>
+
+            </search>
+        </field>
+    </record>
+
+
+    <record
+            model="ir.actions.act_window"
+            id="appointment_action">
+
+            <field name="name">Appointment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hospital.appointment</field>
+<!--            <field name="view_mode">tree,form,activity,calendar,graph,pivot,timeline</field>-->
+        <field name="view_mode">tree,form,calendar,activity,graph,pivot</field>
+<!--            <field name="context">{'search_default_gender_male':1, 'search_default_group_by_gender':1}</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    create your first Appointment !
+                </p>
+            </field>
+    </record>
+
+<!--     server action-->
+<!--    the method of  server action in hospital.appointment-->
+     <record id="hospital_appointment_server_actions" model="ir.actions.server">
+         <field name="name"> Mark As Done </field>
+         <field name="model_id" ref="model_hospital_appointment"/>
+         <field name="binding_model_id" ref="model_hospital_appointment"/>
+         <field name="binding_view_types" >list,form</field>
+         <field name="state">code</field>
+         <field name="code">
+             for record in records:
+                 if record.state == 'in_consultation':
+                    record.action_done()
+<!--                          action _done this is name of method betaa3t state done-->
+
+
+
+<!--              record.action_done() this mean make it done and action_done this name of method done his name action_done-->
+<!--             if you put action as variable you should make records if no put action as variable it,s record.-->
+<!--            action = records.action_open_change_state_wizard() de beta3et model property-->
+         </field>
+    </record>
+
+
+    <!--    this is automated action -->
+<!--     <record-->
+<!--            id="test_whatsapp_cron"-->
+<!--            model="ir.cron">-->
+
+<!--         <field name="name">Hospital_Appointment : check_whatsapp</field>-->
+<!--         <field name="model_id" ref="model_hospital_appointment"/>-->
+<!--         <field name="state">code</field>-->
+<!--&lt;!&ndash;         this code this is name of method betaa3 automated action&ndash;&gt;-->
+<!--         <field name="code">model.test_cron_job()</field>-->
+<!--         <field name="interval_number">1</field>-->
+<!--         <field name="interval_type">days</field>-->
+<!--         <field name="numbercall">-1</field>-->
+<!--         <field name="active">True</field>-->
+
+<!--    </record>-->
+
+
+
+
+     <menuitem
+            id="appointment_menu"
+            name="Appointment"
+            parent="hospital_root_menu"
+            action="appointment_action"
+    />
+
+
+</odoo>

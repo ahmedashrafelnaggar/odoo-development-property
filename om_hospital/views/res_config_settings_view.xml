@@ -1,0 +1,72 @@
+<odoo>
+    <record model="ir.ui.view"  id="res_config_settings_view_tree">
+        <field name="name">res_config_settings_tree</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+<!--            when you want to delete Export All from tree view in odoo programing you use export_xlsx="0" -->
+<!--            if you want to appear it use export_xlsx="1" -->
+            <tree   export_xlsx="1"    create="1" edit="1" delete="1">
+<!--                <field name="name" string="Patient Name"/>-->
+<!--                <field name="ref"/>-->
+<!--                <field name="age"/>-->
+<!--                <field name="gender"/>-->
+
+
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view"  id="res_config_settings_view_form">
+
+        <field name="name">res.config.settings.view.form.inherit.hr.fleet </field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+<!--        <field name="context">{'module':'om_hospital', 'bin_size':False}</field>-->
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <div class="app_settings_block" data-string="Hospital" id="hospital" string="Hospital" data-key="om_hospital">
+                    <h2> Hospital Management</h2>
+                    <div class="row mt16 o_settings_container" id="hospital_setting">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <span class="oe_form_label"> cancellation before</span>
+                                <div class="text-muted content-group mt16">
+                                    <field name="cancel_days" class="text-center oe_inline"/>
+                                    <span> days </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+
+
+
+    <record id="hospital_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_id" ref="res_config_settings_view_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'om_hospital', 'bin_size': False}</field>
+    </record>
+
+     <menuitem
+            id="hospital_config_settings_menu"
+            name="settings"
+            parent="configuration_menu"
+            action="hospital_config_settings_action"
+            groups="base.group_system"
+    />
+
+
+</odoo>

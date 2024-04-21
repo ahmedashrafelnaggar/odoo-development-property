@@ -1,0 +1,184 @@
+<odoo>
+<!--    to see it you should setting then technical then Email templates from technical-->
+    <data noupdate="0">
+<!--            this if you need update and put before name MR / Madam / sir noupdate="1-->
+<!--    <data noupdate="1">-->
+        <record id="appointment_email_template" model="mail.template">
+        <field name="name">Appointment Template</field>
+        <field name="model_id" ref="om_hospital.model_hospital_appointment"/>
+<!--            subject this name customer automatic-->
+        <field name="subject">Appointment Details   </field>
+        <field name="email_from">{{ user.email }}</field>
+        <field name="email_to">{{ object.patient_id.email}}</field>
+        <field name="body_html" type="html">
+
+            <table border="0" cellpadding="0" cellspacing="0"
+                   style=" padding-top:16px; font-family:Verdana, Arial,sans-serif; width: 100%; color:#454748; background-color: #F1F1F1; padding: 16px; border-collapse:separate;">
+                <tr>
+                    <td align="center">
+                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                               style="background-color: white;  color:#454748; padding: 16px; border-collapse:separate;">
+                            <tbody>
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table
+                                                border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;"
+                                        >
+                                            <tr>
+                                                <td valgin="middle">
+                                                    <br/>
+                                                    <span style="font-size:20px; font-weight:bold;">
+<!--                                                        this name is customer-->
+                                                        <t t-out="object.name "></t>
+                                                    </span>
+                                                </td>
+                                                <td valgin="middle" align="right">
+<!--                                                    this fixed-->
+                                                    <img t-attf-src="/logo.png?company={{ object.company_id.id}}"
+                                                         style="padding: 0px; margin: 0px; height :auto; width : 80px;"
+                                                         t-att-alt="object.company_id.name"/>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <!-- this fixed-->
+                                                <td colspan="2" style="text-align: center;">
+                                                    <hr width="100%"
+                                                        style="background-color: rgb(204,204,204); border:medium none; clear:both; display:block;font-size: 0px; min-height:1px; line-height:0; margin:16px 0px 16px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+<!--                                content-->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590"
+                                               style="min-width: 590px; background-color: white; padding: 16px; border-collapse:separate;">
+                                            <tr>
+                                                <td valgin="top" style="font-size: 13px;">
+                                                    <div>
+<!--                                                        this is name in model patient because i did relation field Many2one-->
+                                                        Dear <t t-out="object.patient_id.name"></t>
+                                                        <br/>
+                                                        <br/>
+<!--                                                        appointment_time this field in appointment to appear time but this record in model appointment-->
+                                                        Your appointment has been successfully booked on <t t-out="object.appointment_time"/>
+                                                        <br/>
+<!--                                                        I make name  instead of ref this fixed-->
+                                                        Reference Number: <t t-out="object.name"/>
+                                                        <br/>
+                                                        <br/>
+                                                        Thanks
+                                                        <t t-if="user.signature">
+                                                            <br/>
+<!--                                                            this tawqee3 under template appear name el user-->
+                                                            <t t-out="user.signature">--<br/><t t-out="user.name"/>
+                                                            </t>
+                                                        </t>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+<!--                                                this fixed-->
+                                                <td style="text-align: center;">
+                                                    <hr width="100%"
+                                                        style="background-color: rgb(204,204,204); border:medium none; clear:both; display:block;font-size: 0px; min-height:1px; line-height:0; margin:16px 0px 16px 0px;"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+<!--                                Footer-->
+                                <tr>
+                                    <td align="center" style="min-width: 590px;">
+                                        <table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 16px; border-collapse:separate;">
+                                            <tr>
+                                                <td valgin="middle" align="left">
+<!--                                                    this in footer under template you put name of your company-->
+                                                    <t t-out="object.company_id.name or ''"> Your Company </t>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td valgin="middle" align="left" style="opacity:0.7;">
+<!--                                                    this in footer under template you put phone of your company-->
+                                                    <t t-out="object.company_id.phone or ''"> +20 1122702847 </t>
+<!--                                                    this in footer under template you put email of your company-->
+                                                    <t t-if="object.company_id.email">
+                                                        |
+                                                        <a t-attf-href=" 'mailto:%s' % object.company_id.email"
+                                                           style="text-decoration:none; color:#454748;"
+                                                           t-out="object.company_id.email or ''">
+                                                            info@yourcompany.com
+                                                        </a>
+                                                    </t>
+<!--                                                    this in footer under template you put website of your company-->
+                                                    <t t-if="object.company_id.website">
+                                                        |
+                                                         <a t-attf-href=" 'mailto:%s' % object.company_id.website"
+                                                           style="text-decoration:none; color:#454748;"
+                                                           t-out="object.company_id.website or '' ">
+                                                            http://www.example.com
+                                                        </a>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </field>
+<!--            this fixed it is under some of them taheet ba3d  </field> and  <field name="auto_delete" eval="True"/>-->
+        <field name="auto_delete" eval="True"/>
+<!--        <field name="lang">{{ object.patient_id.lang }}</field>-->
+
+
+        </record>
+    </data>
+</odoo>
+
+
+
+
+
+
+
+
+<!--<odoo>-->
+<!--    <data noupdate="0">-->
+
+<!--        <record id="appointment_email_template" model="mail.template">-->
+<!--        <field name="name">Appointment Template</field>-->
+<!--        <field name="model_id" ref="om_hospital.model_hospital_appointment"/>-->
+<!--&lt;!&ndash;            subject this name customer automatic&ndash;&gt;-->
+<!--        <field name="subject">Appointment Details  </field>-->
+<!--        <field name="email_from">{{ object.user_id.email }}</field>-->
+<!--        <field name="email_to">{{ object.email}}</field>-->
+<!--        <field name="body_html" type="html">-->
+<!--            <div style="margin: 0px; padding: 0px;">-->
+<!--                <p style="margin: 0px; padding: 0px;">-->
+<!--                    Dear-->
+<!--                    <br /><br/>-->
+<!--                    Here is your-->
+<!--                    <br /><br/>-->
+<!--                    Age:-->
+<!--                    Contact Number:-->
+<!--                    <br /><br/>-->
+<!--                    Dont hesitate to contact us if you have any question.-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </field>-->
+<!--        <field name="auto_delete" eval="True"/>-->
+
+<!--&lt;!&ndash;        <field name="report_name">hospital_appointment Report_${{}}</field>&ndash;&gt;-->
+<!--        </record>-->
+<!--    </data>-->
+<!--</odoo>-->
+
+
+

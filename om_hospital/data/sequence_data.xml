@@ -1,0 +1,21 @@
+<odoo>
+    <data>
+        <record id="hospital_patient_sequence" model="ir.sequence">
+            <field name="name">hospital_patient Seq.</field>
+            <field name="code">hospital.patient_seq</field>
+            <field name="prefix">HP</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+<!--        this sequence for another model is called hospital.appointment-->
+        <record id="hospital_appointment_sequence" model="ir.sequence">
+            <field name="name">hospital_appointment Seq.</field>
+            <field name="code">hospital.appointment_seq</field>
+            <field name="prefix">HA</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

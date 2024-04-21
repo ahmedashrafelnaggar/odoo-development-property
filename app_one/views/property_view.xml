@@ -220,6 +220,7 @@
          <field name="name">Change State</field>
          <field name="model_id" ref="model_property"/>
          <field name="binding_model_id" ref="model_property"/>
+         <field name="binding_view_types" >list,form</field>
          <field name="state">code</field>
          <field name="code">
             action = records.action_open_change_state_wizard()

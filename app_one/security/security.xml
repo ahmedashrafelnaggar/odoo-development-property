@@ -5,22 +5,17 @@
         <field name="name"> Real Estate </field>
     </record>
 
-<!--    this is group 1  for manager with connect category-->
+<!--    this is group 1  for manager with connect category and this is record rule beta3oo-->
     <record id="property_manager_group" model="res.groups">
         <field name="name"> Property Manager</field>
         <field name="category_id" ref="app_one.property_category"/>
     </record>
 
-<!--    this is group2 for users-->
-    <record id="property_user_group" model="res.groups">
-        <field name="name"> Property User</field>
-        <field name="category_id" ref="app_one.property_category"/>
-    </record>
-
-<!--    this record rule-->
-    <record id="property_record_rule_by_user" model="ir.rule">
-        <field name="name">Property_Record_Rule_by_User</field>
+    <!--    this record rule-->
+    <record id="property_record_rule_by_manager" model="ir.rule">
+        <field name="name">Property_Record_Rule_by_Manager</field>
         <field name="model_id" ref="app_one.model_property"/>
+        <field name="groups" eval="[(4, ref('app_one.property_manager_group'))]"/>
         <field name="domain_force">[('create_uid','=', user.id)]</field>
 <!--        '|', ('company_id', '=', False),-->
 <!--             ('company_id', 'in', company_ids)]-->
@@ -31,7 +26,53 @@
         <field name="perm_create" eval="True"/>
         <field name="perm_unlink" eval="True"/>
     </record>
+<!-- &#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;-->
+
+<!--    this is group2 for users and this is record rule beta3oo-->
+    <record id="property_user_group" model="res.groups">
+        <field name="name"> Property User</field>
+        <field name="category_id" ref="app_one.property_category"/>
+    </record>
+
+<!--    this record rule-->
+    <record id="property_record_rule_by_user" model="ir.rule">
+        <field name="name">Property_Record_Rule_by_User</field>
+        <field name="model_id" ref="app_one.model_property"/>
+<!--        <field name="groups" eval="[(4, ref('your app.id betaa3 group'))]"/>-->
+        <field name="groups" eval="[(4, ref('app_one.property_user_group'))]"/>
+<!--        what is domain _force this persmisson for user to see this [('name_field','=', value beta3et el name_field)],[('create_uid','=', user.id)]-->
+<!--        but user u can read and write only but no create and unlink-->
+        <field name="domain_force">[('create_uid','=', user.id)]</field>
+<!--        '|', ('company_id', '=', False),-->
+<!--             ('company_id', 'in', company_ids)]-->
+<!--        </field>-->
+
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="0"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="0"/>
+    </record>
+
+
+
+
+    <!--    this record rule-->
+<!--    <record id="property_record_rule_by_manager" model="ir.rule">-->
+<!--        <field name="name">Property_Record_Rule_by_Manager</field>-->
+<!--        <field name="model_id" ref="app_one.model_property"/>-->
+<!--        <field name="groups" eval="[(4, ref('property_.property_record_rule_by_manager'))]"/>-->
+<!--        <field name="domain_force">[]</field>-->
+<!--&lt;!&ndash;        '|', ('company_id', '=', False),&ndash;&gt;-->
+<!--&lt;!&ndash;             ('company_id', 'in', company_ids)]&ndash;&gt;-->
+<!--&lt;!&ndash;        </field>&ndash;&gt;-->
+
+<!--        <field name="perm_read" eval="1"/>-->
+<!--        <field name="perm_write" eval="1"/>-->
+<!--        <field name="perm_create" eval="1"/>-->
+<!--        <field name="perm_unlink" eval="1"/>-->
+<!--    </record>-->
 </odoo>
+
 
 
 

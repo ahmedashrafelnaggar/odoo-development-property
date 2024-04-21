@@ -1,0 +1,82 @@
+<odoo>
+
+    <record model="ir.ui.view"  id="cancel_appointment_view_tree">
+        <field name="name">cancel_appointment_tree</field>
+        <field name="model">cancel.appointment</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <tree create="1" edit="1" delete="1">
+<!--                <field name="name" string="Patient Name"/>-->
+                <field name="appointment_id"/>
+<!--                <field name="age"/>-->
+<!--                <field name="gender"/>-->
+            </tree>
+        </field>
+    </record>
+    <record model="ir.ui.view"  id="cancel_appointment_view_form">
+        <field name="name">cancel_appointment form </field>
+        <field name="model">cancel.appointment</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+<!--                    <field name="image" widget="image" class="oe_avatar"/>-->
+
+                    <group>
+                        <group string="General info">
+                            <field name="appointment_id"/>
+                            <field name="reason" />
+                        </group>
+
+                        <group string="Additional info">
+                            <field name="cancel_date"/>
+<!--                            <field name="gender"/>-->
+<!--                            <field name="tad_ids" widget="many2many_tags" options="{'color_field':'color'}"/>-->
+<!--                            <field name="active" invisible="1"/>-->
+                        </group>
+                    </group>
+                    <footer>
+<!--                        this button for method action_cancel_appointment-->
+                        <button string="Cancel Appointment" type="object" name="action_cancel_appointment" class="btn btn-primary"/>
+                        <button string="Discard" special="cancel"  class="btn btn-secondary"/>
+                    </footer>
+<!--                    <notebook>-->
+<!--                        <page string="pharmacy">-->
+<!--                            <field name="line_ids" >-->
+<!--                                <tree editable="bottom">-->
+
+<!--                                    <field name="description"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" groups="base.group_user"/>-->
+<!--                    <field name="activity_ids"/>-->
+<!--                    <field name="message_ids"/>-->
+<!--                </div>-->
+            </form>
+        </field>
+    </record>
+
+        <record
+            model="ir.actions.act_window"
+            id="cancel_appointment_action">
+
+            <field name="name">Cancel Appointment</field>
+            <field name="res_model">cancel.appointment</field>
+            <field name="target">new</field>
+            <field name="view_mode">form</field>
+<!--            <field name="">tree,form</field>-->
+    </record>
+
+    <menuitem
+            id="cancel_appointment_menu"
+            name="Cancellation"
+            parent="appointment_master_menu"
+            action="cancel_appointment_action"
+    />
+</odoo>

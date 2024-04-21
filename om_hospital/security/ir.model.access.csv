@@ -1,0 +1,11 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_hospital_patient,access_hospital_patient,model_hospital_patient,,1,1,1,1
+access_hospital_appointment,access_hospital_appointment,model_hospital_appointment,,1,1,1,1
+access_patient_line,access_patient_line,model_patient_line,,1,1,1,1
+access_appointment_line,access_appointment_line,model_appointment_line,,1,1,1,1
+access_hospital_doctor,access_hospital_doctor,model_hospital_doctor,,1,1,1,1
+access_doctor_line,access_doctor_line,model_doctor_line,,1,1,1,1
+access_patient_tag,access_patient_tag,model_patient_tag,,1,1,1,1
+access_cancel_appointment,access_cancel_appointment,model_cancel_appointment,,1,1,1,1
+access_odoo_playground,access_odoo_playground,model_odoo_playground,,1,1,1,1
+access_res_config_settings,access_res_config_settings,model_res_config_settings,,1,1,1,1

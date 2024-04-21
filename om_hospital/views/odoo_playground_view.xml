@@ -1,0 +1,105 @@
+<odoo>
+
+    <record model="ir.ui.view"  id="odoo_playground_view_tree">
+        <field name="name">odoo_playground_tree</field>
+        <field name="model">odoo.playground</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <tree create="1" edit="1" delete="1">
+                <field name="code"/>
+                <field name="result"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view"  id="odoo_playground_view_form">
+        <field name="name">hospital_patient form </field>
+        <field name="model">odoo.playground</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+<!--                    <div name="button_box" class="oe_button_box">-->
+<!--                        <button name="action_open_related_owner" string="Owner"  icon="fa-user" type="object" invisible="not owner_id">-->
+
+<!--                        </button>-->
+<!--                    </div>-->
+<!--&lt;!&ndash;                    web ribbon &ndash;&gt;-->
+<!--                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>-->
+<!--                    <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold' "/>-->
+
+
+<!--                    <header>-->
+<!--                        <button string="Set To Draft" type="object" name="action_draft" class="btn btn-outline-primary p-1 m-1 btn-lg"  invisible="state in ('draft','closed')"/>-->
+<!--                        <button string="Action" type="object" name="action" class="btn btn-outline-primary p-1 m-1 btn-lg"/>-->
+<!--                        <button string="Pending" type="object" name="action_pending" class="btn btn-outline-info p-1 m-1 btn-lg" invisible="state != 'draft'"/>-->
+<!--                        <button string="Sold" type="object" name="action_sold" class="btn btn-outline-success p-1 m-1 btn-lg"  invisible="state != 'pending'"/>-->
+<!--                        <button string="Closed" type="object" name="action_closed" class="btn btn-outline-warning p-1 m-1 btn-lg"/>-->
+<!--                        <field name="state" widget="statusbar" options="{'clickable':1}"/>-->
+<!--                    </header>-->
+
+
+
+                    <group>
+                        <group string="General info">
+                            <field name="model_id"/>
+                            <field name="code" widget="ace" options="{'mode' : 'python'}"/>
+                            <button string="Execute" type="object" name="action_execute" class="btn btn-outline-primary p-1 m-1 btn-lg"/>
+                        </group>
+
+<!--                        <group>-->
+<!--                            <button string="Execute" type="object" name="action_execute" class="btn btn-outline-primary p-1 m-1 btn-lg"/>-->
+<!--                        </group>-->
+
+                        <group string="Additional info">
+                            <field name="result"/>
+                        </group>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="pharmacy">-->
+<!--                            <field name="line_ids" >-->
+<!--                                <tree editable="bottom">-->
+
+<!--                                    <field name="description"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record
+            model="ir.actions.act_window"
+            id="odoo_playground_action">
+
+            <field name="name">odoo_playground</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odoo.playground</field>
+<!--            <field name="view_model">form</field>-->
+            <field name="target">inline</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    create your first odoo_playground !
+                </p>
+            </field>
+    </record>
+<!--this is submenu but lvel2,3,4 but without parent-->
+<!--    <menuitem id="technical_menu" name="Technical">-->
+<!--        <menuitem id="odoo_playground1_menu" name="Playground1">-->
+<!--            <menuitem id="odoo_playground2_menu" name="Playground2" action="odoo_playground_action"/>-->
+<!--        </menuitem>-->
+<!--    </menuitem>-->
+<!--    this is another submenu which contain on parent , it accept one menu under it only when you put parent-->
+    <menuitem id="technical_menu" name="Technical" parent="hospital_root_menu">
+            <menuitem id="odoo_playground_menu" name="Playground" action="odoo_playground_action"/>
+    </menuitem>
+
+
+
+
+</odoo>

@@ -9,6 +9,8 @@
 <!--                <field name="property_id"/>-->
 <!--            </field>-->
             <xpath expr="//field[@name='vat']" position="after">
+                <field name="instagram_account"/>
+                <field name="messenger_account"/>
                 <field name="price"/>
                 <field name="property_id"/>
             </xpath>

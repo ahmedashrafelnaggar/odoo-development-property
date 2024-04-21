@@ -1,0 +1,36 @@
+
+<odoo>
+    <data>
+        <record id="patient_tag_vip" model="patient.tag">
+            <field name="name">vip</field>
+        </record>
+
+         <record id="patient_tag_kids" model="patient.tag">
+            <field name="name">kids</field>
+        </record>
+
+        <record id="patient_tag_adult" model="patient.tag">
+            <field name="name">adult</field>
+        </record>
+
+        <record id="patient_tag_mr" model="patient.tag">
+            <field name="name">Mr</field>
+            <field name="active" eval="False"/>
+        </record>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </data>
+</odoo>

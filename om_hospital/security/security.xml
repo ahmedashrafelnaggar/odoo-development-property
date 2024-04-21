@@ -1,0 +1,27 @@
+<odoo>
+     <record id="hospital_manager_group" model="res.groups">
+         <field name="name"> Manager</field>
+<!--         <field name="category_id" ref="app_one.property_category"/>-->
+    </record>
+
+    <record id="hospital_doctor_group" model="res.groups">
+        <field name="name">  User</field>
+<!--        <field name="category_id" ref="app_one.property_category"/>-->
+    </record>
+
+<!--    record rule-->
+    <record id="patient_record_rule_by_manager" model="ir.rule">
+        <field name="name">Patient_Record_Rule_by_Manager</field>
+        <field name="model_id" ref="om_hospital.model_hospital_patient"/>
+        <field name="groups" eval="[(4, ref('om_hospital.hospital_manager_group'))]"/>
+        <field name="domain_force">[('doctor_id','=', user.id)]</field>
+<!--        '|', ('company_id', '=', False),-->
+<!--             ('company_id', 'in', company_ids)]-->
+<!--        </field>-->
+
+        <field name="perm_read" eval="True"/>
+        <field name="perm_write" eval="True"/>
+        <field name="perm_create" eval="True"/>
+        <field name="perm_unlink" eval="True"/>
+    </record>
+</odoo>

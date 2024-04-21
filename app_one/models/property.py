@@ -3,13 +3,10 @@ from odoo.exceptions import ValidationError
 from datetime import timedelta
 
 
-
-
 class Property(models.Model):
     _name = 'property'
     _description = 'Property'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-
 
     # this is field to do sequence for property, should this field ref before name
     ref = fields.Char(default="New", readonly=0 )
@@ -17,43 +14,31 @@ class Property(models.Model):
     description = fields.Text(tracking=1)
     post_code = fields.Char(required=1)
     date_availability = fields.Date(default=fields.Date.today(),tracking=1)
-
     expected_price = fields.Float()
     selling_price = fields.Float()
-
     # this is field to do automated action (date , is_late)
     expected_selling_price_date = fields.Date(tracking=1)
     is_late = fields.Boolean()
 
     diff = fields.Float(compute='_compute_diff', store=1)
-
     bedrooms = fields.Integer(required=True)
-
     living_area = fields.Integer()
-
     facades = fields.Integer()
-
     garage = fields.Boolean()
-
     garden = fields.Boolean()
-
     garden_area = fields.Integer()
-
     garden_orientation = fields.Selection([
         ('north', 'north'),
         ('south', 'south'),
         ('east', 'east'),
         ('west', 'west'),
-
     ], default='north')
-
     # this is relation with  is called owner and  Ido related field
     owner_id = fields.Many2one('owner')
     owner_address = fields.Char(related='owner_id.address', readonly=0)
     owner_phone = fields.Char(related='owner_id.phone', readonly=0)
     create_time = fields.Datetime(default=fields.Datetime.now())
     next_time = fields.Datetime(compute='_compute_next_time')
-
     tag_ids = fields.Many2many('tag')
 
     # this is work flow field state
@@ -63,18 +48,14 @@ class Property(models.Model):
         ('sold', 'sold'),
         ('closed', 'Closed'),
         # when you do server action you should select is called (closed) because this is for server action
-
     ], default='draft')
-
     active = fields.Boolean(default='true',string='active')
     line_ids = fields.One2many('property.line', 'property_id')
-
     # this method of validation  constrains
+    # when you use sql constrain you should create  new database and should admin_passwd = admin in file odoo.conf
     _sql_constraints = [
-
         ('name_unique', 'unique("name")', "this name is exist!"),
     ]
-
     # compute field next_time
     @api.depends('create_time')
     def _compute_next_time(self):
@@ -104,7 +85,7 @@ class Property(models.Model):
     @api.constrains('bedrooms')
     def _check_bedrooms_greater_zero(self):
         for rec in self:
-            if rec.bedrooms == 0:
+            if rec.bedrooms <= 0:
                 raise ValidationError("Please add valid number  of bedrooms!")
 
     # this method of Crud:create,read= search,update=write ,delete=unlink
@@ -130,10 +111,7 @@ class Property(models.Model):
         print("inside unlink method")
         return rec
 
-
-
  # this method of workflow field state
-
     def action_draft(self):
         for rec in self:
             rec.create_history_record(rec.state, 'draft')
@@ -150,7 +128,7 @@ class Property(models.Model):
             rec.create_history_record(rec.state, 'sold')
             rec.state = 'sold'
 
- # this method of server action
+ # this method of server action or any method in state field
     def action_closed(self):
         for rec in self:
             rec.create_history_record(rec.state, 'closed')
@@ -213,7 +191,6 @@ class Property(models.Model):
         action['context'] = {'default_property_id': self.id}
         return action
 
-
     # this method smart button ( method , button in form view with related field)
     def action_open_related_owner(self):
         action = self.env['ir.actions.actions']._for_xml_id('app_one.owner_action')
@@ -223,17 +200,14 @@ class Property(models.Model):
         return action
 
 
-
-
 # this is class of notebook of property
 class PropertyLine(models.Model):
     _name = 'property.line'
 
-
+    property_id = fields.Many2one('property')
     area = fields.Integer()
     description = fields.Char()
 
-    property_id = fields.Many2one('property')
 
 
 

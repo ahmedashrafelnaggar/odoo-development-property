@@ -1,0 +1,189 @@
+<odoo>
+     <record model="ir.ui.view"  id="patient_tag_view_tree">
+        <field name="name">patient_tag_tree</field>
+        <field name="model">patient.tag</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <tree create="1" edit="1" delete="1" sample="1">
+                <field name="name" string="Name"/>
+                <field name="active"/>
+                <field name="color" widget="color_picker"/>
+                <field name="color2" widget="color"/>
+                <field name="activity_ids" widget="list_activity"/>
+<!--                <field name="age"/>-->
+<!--                <field name="gender"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view"  id="patient_tag_view_form">
+        <field name="name">patient_tag form </field>
+        <field name="model">patient.tag</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <form create="1" edit="1" delete="1">
+                <sheet>
+<!--                    <div name="button_box" class="oe_button_box">-->
+<!--                        <button name="action_open_related_owner" string="Owner"  icon="fa-user" type="object" invisible="not owner_id">-->
+
+<!--                        </button>-->
+<!--                    </div>-->
+<!--&lt;!&ndash;                    web ribbon &ndash;&gt;-->
+<!--                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>-->
+<!--                    <widget name="web_ribbon" title="Sold" bg_color="text-bg-success" invisible="state != 'sold' "/>-->
+
+
+<!--                    <header>-->
+<!--                        <button string="Set To Draft" type="object" name="action_draft" class="btn btn-outline-primary p-1 m-1 btn-lg"  invisible="state in ('draft','closed')"/>-->
+<!--                        <button string="Action" type="object" name="action" class="btn btn-outline-primary p-1 m-1 btn-lg"/>-->
+<!--                        <button string="Pending" type="object" name="action_pending" class="btn btn-outline-info p-1 m-1 btn-lg" invisible="state != 'draft'"/>-->
+<!--                        <button string="Sold" type="object" name="action_sold" class="btn btn-outline-success p-1 m-1 btn-lg"  invisible="state != 'pending'"/>-->
+<!--                        <button string="Closed" type="object" name="action_closed" class="btn btn-outline-warning p-1 m-1 btn-lg"/>-->
+<!--                        <field name="state" widget="statusbar" options="{'clickable':1}"/>-->
+<!--                    </header>-->
+
+<!--                     <div class="oe_title">-->
+
+<!--                         <h1>-->
+<!--                             <label for="ref" class="form-label">ref:</label>-->
+<!--                             <field name="ref" readonly="state !='draft'"/>-->
+<!--                         </h1>-->
+
+<!--                         <h2>-->
+<!--                             <label for="name" class="form-label">name:</label>-->
+<!--                             <field name="name" readonly="state !='draft'"/>-->
+<!--                         </h2>-->
+<!--                     </div>-->
+<!--                     <separator string="General" colspan="2" />-->
+
+                    <group>
+                        <group string="General info">
+                            <field name="sequence"/>
+                            <field name="name"/>
+<!--                            <field name="date_of_birth"/>-->
+<!--                            <field name="age"/>-->
+                        </group>
+
+                        <group string="Additional info">
+                            <field name="color" widget="color_picker"/>
+                            <field name="color2" widget="color"/>
+                            <field name="active" widget="boolean_toggle"/>
+<!--                            <field name="ref"/>-->
+<!--                            <field name="active" invisible="1"/>-->
+                        </group>
+                    </group>
+<!--                    <notebook>-->
+<!--                        <page string="pharmacy">-->
+<!--                            <field name="line_ids" >-->
+<!--                                <tree editable="bottom">-->
+<!--                                    <field name="prescription"/>-->
+<!--                                    <field name="description"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+     <record model="ir.ui.view"  id="patient_tag_view_search">
+
+        <field name="name">patient_tag search</field>
+        <field name="model">patient.tag</field>
+        <field name="priority" eval="16"/>
+        <field name="arch" type="xml">
+
+            <!-- view content: <form>, <tree>, <graph>, ... -->
+            <search>
+<!--                <field name="doctor_name" string="Doctor Name" filter_domain="['|',('doctor_name', 'ilike', self),('ref','ilike',self)]"/>-->
+<!--                <field name="ref"/>-->
+<!--                <field name="age"/>-->
+<!--                <field name="gender"/>-->
+
+<!--                <filter name="gender_male" string="Male"-->
+<!--                        domain="[('gender', '=', 'male')]"/>-->
+<!--                <filter name="gender_female" string="Female"-->
+<!--                        domain="[('gender', '=', 'female')]"/>-->
+<!--                <filter name="filter_kids" string="Kids"-->
+<!--                        domain="[('age', '&lt;=', 5)]"/>-->
+<!--                <filter name="filter_Archived" string="Archived"-->
+<!--                        domain="[('active', '=', False)]"/>-->
+
+<!--                <group string="Group By">-->
+<!--                    <filter name="group_by_gender" string="Gender"-->
+<!--                            context="{'group_by': 'gender'}"/>-->
+<!--                </group>-->
+<!--                <searchpanel>-->
+<!--                    <field name="gender" enable_counters="1" icon="fa-users" select="multi"/>-->
+<!--                </searchpanel>-->
+
+            </search>
+        </field>
+    </record>
+<!--    <record id="hospital_doctor_kanban_view" model="ir.ui.view">-->
+<!--        <field name="name">hospital_doctor.kanban</field>-->
+<!--        <field name="model">hospital.doctor</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <kanban class="o_res_partner_kanban" sample="1">-->
+<!--                <field name="id"/>-->
+<!--                <field name="doctor_name"/>-->
+<!--                <field name="gender"/>-->
+<!--                <field name="age"/>-->
+<!--                <field name="note"/>-->
+<!--                <templates>-->
+<!--                    <t t-name="kanban-box">-->
+<!--                        <div t-attf-class="oe_kanban_global_click">-->
+<!--&lt;!&ndash;                            <div class="o_kanban_image">&ndash;&gt;-->
+<!--&lt;!&ndash;                                <img alt="Avatar" t-att-src="kanban_image('res.partners', 'image_medium', record.id.raw_value)"/>&ndash;&gt;-->
+<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
+<!--                            <div class="oe_kanban_details">-->
+<!--                                <strong class="o_kanban_record_title">-->
+<!--                                    <field name="doctor_name"/>-->
+<!--                                </strong>-->
+<!--                                <div t-if="record.mobile.value">-->
+<!--                                    <t t-esc="record.mobile.value"/>-->
+<!--                                </div>-->
+<!--                                <div t-if="record.email.value">-->
+<!--                                    <t t-esc="record.email.value"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </templates>-->
+<!--            </kanban>-->
+<!--        </field>-->
+<!--    </record>-->
+
+    <record
+            model="ir.actions.act_window"
+            id="patient_tag_action">
+
+            <field name="name">patient_tag</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">patient.tag</field>
+<!--            <field name="view_model">tree,form,kanban</field>-->
+<!--            <field name="context">{}</field>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    create your first tag !
+                </p>
+            </field>
+    </record>
+
+     <menuitem
+            id="patient_tag_menu"
+            name=" Tags"
+            parent="configuration_menu"
+            action="patient_tag_action"
+    />
+
+
+</odoo>
